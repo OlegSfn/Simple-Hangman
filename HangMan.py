@@ -63,24 +63,24 @@ def checkLetter(userAnswer):
 
     return isLetter
 
-def printWordOpening():
-    print('  '.join(wordOpening))
+def GetWordOpening(word):
+    return '  '.join(word)
 
 def game():
     chooseWord()
-    printWordOpening()
+    print(GetWordOpening(wordOpening))
     
     usedLetters.clear()
     score = 100
     x = 12
     while(x != 0):
         if(not '*' in wordOpening):
-            print(f"{color.green}Вы выиграли, слово - {printWordOpening()}. {color.purple}Ваши очки: {score}{color.end}")
+            print(f"{color.green}Вы выиграли, слово - {GetWordOpening(wordOpening)}. {color.purple}Ваши очки: {score}{color.end}")
             wantRestart()
             
         userAnswer = input('Назовите букву: ').lower()
-        while len(userAnswer) > 1:
-            print(f'{color.red}Вы дожны вводить только одну букву{color.end}')
+        while len(userAnswer) > 1 or not userAnswer.isalpha():
+            print(f'{color.red}Вы должны ввести одну букву{color.end}')
             userAnswer = input('Назовите букву: ').lower()
         
         if(userAnswer.lower() in usedLetters):
@@ -88,7 +88,7 @@ def game():
             continue
         if(checkLetter(userAnswer)):
             usedLetters.append(userAnswer)
-            printWordOpening()
+            print(GetWordOpening(wordOpening))
         else:
             x -= 1
             score -= 8
